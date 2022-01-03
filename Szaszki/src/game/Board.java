@@ -121,6 +121,7 @@ public class Board
 			}
 		}
 	}
+
 	public boolean isWhiteMove() {
 		return whiteMove;
 	}
