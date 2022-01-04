@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
@@ -10,6 +12,7 @@ import pieces.Piece;
 public class BoardController {
 	private Piece[] board;
 	private Image blackPawn = new Image(getClass().getResourceAsStream("/images/blackPawn.png"));
+	ArrayList<ImageView> list = new ArrayList<ImageView>();
 	@FXML
 	private ImageView square0;
 	@FXML
@@ -140,14 +143,80 @@ public class BoardController {
 	private ImageView square63;
 	@FXML
     public void initialize() {
+		fillArr();
         for(int i = 0; i < board.length; i++) {
         	if(board[i] == null)
         		continue;
-        	//TODO
-        		
         }
     }
 	public BoardController(Piece[] board) {
 		this.board = board;
+	}
+	private void fillArr()
+	{
+		list.add(square0);
+		list.add(square1);
+		list.add(square2);
+		list.add(square3);
+		list.add(square4);
+		list.add(square5);
+		list.add(square6);
+		list.add(square7);
+		list.add(square8);
+		list.add(square9);
+		list.add(square10);
+		list.add(square11);
+		list.add(square12);
+		list.add(square13);
+		list.add(square14);
+		list.add(square15);
+		list.add(square16);
+		list.add(square17);
+		list.add(square18);
+		list.add(square19);
+		list.add(square20);
+		list.add(square21);
+		list.add(square22);
+		list.add(square23);
+		list.add(square24);
+		list.add(square25);
+		list.add(square26);
+		list.add(square27);
+		list.add(square28);
+		list.add(square29);
+		list.add(square30);
+		list.add(square31);
+		list.add(square32);
+		list.add(square33);
+		list.add(square34);
+		list.add(square35);
+		list.add(square36);
+		list.add(square37);
+		list.add(square38);
+		list.add(square39);
+		list.add(square40);
+		list.add(square41);
+		list.add(square42);
+		list.add(square43);
+		list.add(square44);
+		list.add(square45);
+		list.add(square46);
+		list.add(square47);
+		list.add(square48);
+		list.add(square49);
+		list.add(square50);
+		list.add(square51);
+		list.add(square52);
+		list.add(square53);
+		list.add(square54);
+		list.add(square55);
+		list.add(square56);
+		list.add(square57);
+		list.add(square58);
+		list.add(square59);
+		list.add(square60);
+		list.add(square61);
+		list.add(square62);
+		list.add(square63);
 	}
 }
