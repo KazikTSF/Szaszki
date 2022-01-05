@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface SlideMove {
 	
-	default ArrayList<Integer> slideMove(int pos) {
+	static ArrayList<Integer> slideMove(int pos) {
 		
 		ArrayList<Integer> moves = new ArrayList<Integer>();
 		int row = pos/8;

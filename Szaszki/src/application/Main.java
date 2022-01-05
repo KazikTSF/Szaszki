@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import pieces.SlideMove;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 
 public class Main extends Application 
@@ -18,11 +19,13 @@ public class Main extends Application
 		try 
 		{
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/board.fxml"));
-			BoardController con = new BoardController(game.getBoard().getBoard());
+			BoardController con = new BoardController(game.getBoard());
 			loader.setController(con);
 			Parent root = loader.load();
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
+			primaryStage.setTitle("Szaszki");
+			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/blackKing.png")));
 			primaryStage.show();
 		}
 		catch(Exception e) 

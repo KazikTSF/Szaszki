@@ -2,6 +2,7 @@ package application;
 
 import java.util.ArrayList;
 
+import game.Board;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,7 +16,7 @@ import pieces.Queen;
 import pieces.Rook;
 
 public class BoardController {
-	private Piece[] board;
+	private Board board;
 	private Image blackPawn = new Image(getClass().getResourceAsStream("/images/blackPawn.png"));
 	private Image blackKing = new Image(getClass().getResourceAsStream("/images/blackKing.png"));
 	private Image blackQueen = new Image(getClass().getResourceAsStream("/images/blackQueen.png"));
@@ -30,6 +31,7 @@ public class BoardController {
 	private Image whiteBishop = new Image(getClass().getResourceAsStream("/images/whiteBishop.png"));
 	ArrayList<ImageView> list = new ArrayList<ImageView>();
 	Piece selected = null;
+	int selectedPos = -1;
 	
 	@FXML
 	private ImageView square0;
@@ -163,50 +165,55 @@ public class BoardController {
 	@FXML
     public void initialize() {
 		fillArr();
-        for(int i = 0; i < board.length; i++) {
+        paint();
+    }
+	private void paint() {
+		for(int i = 0; i < list.size(); i++) 
+			list.get(i).setImage(null);
+		for(int i = 0; i < board.getBoard().length; i++) {
         	list.get(i).setFitHeight(96);
     		list.get(i).setFitWidth(96);
-        	if(board[i] == null)
+        	if(board.getBoard()[i] == null)
         		continue;
-        	if(board[i] instanceof Pawn) {
-        		if(board[i].isWhite())
+        	if(board.getBoard()[i] instanceof Pawn) {
+        		if(board.getBoard()[i].isWhite())
         			list.get(i).setImage(whitePawn);
         		else
         			list.get(i).setImage(blackPawn);
         	}
-        	else if(board[i] instanceof Rook) {
-        		if(board[i].isWhite())
+        	else if(board.getBoard()[i] instanceof Rook) {
+        		if(board.getBoard()[i].isWhite())
         			list.get(i).setImage(whiteRook);
         		else
         			list.get(i).setImage(blackRook);
         	}
-        	else if(board[i] instanceof Bishop) {
-        		if(board[i].isWhite())
+        	else if(board.getBoard()[i] instanceof Bishop) {
+        		if(board.getBoard()[i].isWhite())
         			list.get(i).setImage(whiteBishop);
         		else
         			list.get(i).setImage(blackBishop);
         	}
-        	else if(board[i] instanceof Knight) {
-        		if(board[i].isWhite())
+        	else if(board.getBoard()[i] instanceof Knight) {
+        		if(board.getBoard()[i].isWhite())
         			list.get(i).setImage(whiteKnight);
         		else
         			list.get(i).setImage(blackKnight);
         	}
-        	else if(board[i] instanceof Queen) {
-        		if(board[i].isWhite())
+        	else if(board.getBoard()[i] instanceof Queen) {
+        		if(board.getBoard()[i].isWhite())
         			list.get(i).setImage(whiteQueen);
         		else
         			list.get(i).setImage(blackQueen);
         	}
-        	else if(board[i] instanceof King) {
-        		if(board[i].isWhite())
+        	else if(board.getBoard()[i] instanceof King) {
+        		if(board.getBoard()[i].isWhite())
         			list.get(i).setImage(whiteKing);
         		else
         			list.get(i).setImage(blackKing);
         	}
         }
-    }
-	public BoardController(Piece[] board) {
+	}
+	public BoardController(Board board) {
 		this.board = board;
 	}
 	private void fillArr()
@@ -279,6 +286,24 @@ public class BoardController {
 	public void onMousePressed(MouseEvent e) {
 		int col = (int) (e.getX()/100);
 		int row = (int) (e.getY()/100);
-		
+		if(selected == null) {
+			selectedPos = 8*row+col;
+			if(board.getBoard()[selectedPos] == null) 
+				return;
+			if((board.isWhiteMove() && board.getBoard()[selectedPos].isWhite()) || (!board.isWhiteMove() && !board.getBoard()[selectedPos].isWhite()))
+				selected = board.getBoard()[selectedPos];	
+		}
+		else {
+			int move = (8*row+col)-selected.getPos();
+			ArrayList<Integer> moves = new ArrayList<Integer>();
+			moves.addAll(board.getBoard()[selectedPos].listPossibleMoves(board.getBoard()));
+			for(int i = 0; i < moves.size(); i++) {
+				if(moves.get(i) == move) {
+					board.move(selected, move);
+				}
+			}
+			selected = null;
+			paint();
+		}
 	}
 }

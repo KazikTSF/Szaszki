@@ -1,5 +1,7 @@
 package game;
 
+import java.util.ArrayList;
+
 import pieces.Bishop;
 import pieces.King;
 import pieces.Knight;
@@ -131,5 +133,14 @@ public class Board
 	public int getEnPassantPos() {
 		return enPassantPos;
 	}
-	
+	public void move(Piece piece, int move) {
+			int finalPos = piece.getPos()+move;
+			board[finalPos] = piece;
+			board[piece.getPos()] = null;
+			board[finalPos].setPos(piece.getPos()+move);
+			if(whiteMove) 
+				whiteMove = false;
+			else
+				whiteMove = true;
+	}
 }
