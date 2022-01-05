@@ -1,13 +1,16 @@
 package pieces;
 
+import java.util.ArrayList;
+
 public class Pawn extends Piece {
-	
+	private int pos;
 	public Pawn(boolean isWhite, int pos) {
-		super(isWhite, pos, PieceType.PAWN);
+		super(isWhite, PieceType.PAWN, 1);
+		this.pos = pos;
 	}
 
 	@Override
-	protected int[] possibleMoves() {
+	protected ArrayList<Integer> possibleMoves() {
 		return null;
 	}
 
@@ -18,8 +21,14 @@ public class Pawn extends Piece {
 	}
 	
 	@Override
-	protected void move() {
+	protected ArrayList<Integer> move() {
+		return null;
 		// TODO Auto-generated method stub
 		
 	}
+
+	public int getPos() {
+		return pos;
+	}
+	
 }

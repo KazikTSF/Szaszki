@@ -1,14 +1,18 @@
 package pieces;
 
+import java.util.ArrayList;
+
 public class Bishop extends Piece {
 
+	private int pos;
+	
 	public Bishop(boolean isWhite, int pos) {
-		super(isWhite, pos, PieceType.BISHOP);
-		// TODO Auto-generated constructor stub
+		super(isWhite, PieceType.BISHOP, 3);
+		this.pos = pos;
 	}
 
 	@Override
-	protected int[] possibleMoves() {
+	protected ArrayList<Integer> possibleMoves() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -20,9 +24,12 @@ public class Bishop extends Piece {
 	}
 	
 	@Override
-	protected void move() {
-		// TODO Auto-generated method stub
+	protected ArrayList<Integer> move() {
+		return null;
 		
 	}
 
+	public int getPos() {
+		return pos;
+	}
 }

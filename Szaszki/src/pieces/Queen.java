@@ -1,14 +1,17 @@
 package pieces;
 
-public class Queen extends Piece {
+import java.util.ArrayList;
 
+public class Queen extends Piece {
+	private int pos;
+	
 	public Queen(boolean isWhite, int pos) {
-		super(isWhite, pos, PieceType.QUEEN);
-		// TODO Auto-generated constructor stub
+		super(isWhite, PieceType.QUEEN, 9);
+		this.pos = pos;
 	}
 
 	@Override
-	protected int[] possibleMoves() {
+	protected ArrayList<Integer> possibleMoves() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -20,9 +23,12 @@ public class Queen extends Piece {
 	}
 	
 	@Override
-	protected void move() {
-		// TODO Auto-generated method stub
-		
+	protected ArrayList<Integer> move() {
+		return null;
 	}
 
+	public int getPos() {
+		return pos;
+	}
+	
 }

@@ -1,13 +1,16 @@
 package pieces;
 
-public class Knight extends Piece {
+import java.util.ArrayList;
 
+public class Knight extends Piece {
+	private int pos;
 	public Knight(boolean isWhite, int pos) {
-		super(isWhite, pos, PieceType.KNIGHT);
+		super(isWhite, PieceType.KNIGHT, 3);
+		this.pos = pos;
 	}
 
 	@Override
-	protected int[] possibleMoves() {
+	protected ArrayList<Integer> possibleMoves() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -19,9 +22,14 @@ public class Knight extends Piece {
 	}
 	
 	@Override
-	protected void move() {
+	protected ArrayList<Integer> move() {
+		return null;
 		// TODO Auto-generated method stub
 		
 	}
 
+	public int getPos() {
+		return pos;
+	}
+	
 }

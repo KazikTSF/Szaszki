@@ -3,16 +3,34 @@ package application;
 import java.util.ArrayList;
 
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import pieces.Bishop;
+import pieces.King;
+import pieces.Knight;
 import pieces.Pawn;
 import pieces.Piece;
+import pieces.Queen;
+import pieces.Rook;
 
 public class BoardController {
 	private Piece[] board;
 	private Image blackPawn = new Image(getClass().getResourceAsStream("/images/blackPawn.png"));
+	private Image blackKing = new Image(getClass().getResourceAsStream("/images/blackKing.png"));
+	private Image blackQueen = new Image(getClass().getResourceAsStream("/images/blackQueen.png"));
+	private Image blackRook = new Image(getClass().getResourceAsStream("/images/blackRook.png"));
+	private Image blackKnight = new Image(getClass().getResourceAsStream("/images/blackKnight.png"));
+	private Image blackBishop = new Image(getClass().getResourceAsStream("/images/blackBishop.png"));
+	private Image whitePawn = new Image(getClass().getResourceAsStream("/images/whitePawn.png"));
+	private Image whiteKing = new Image(getClass().getResourceAsStream("/images/whiteKing.png"));
+	private Image whiteQueen = new Image(getClass().getResourceAsStream("/images/whiteQueen.png"));
+	private Image whiteRook = new Image(getClass().getResourceAsStream("/images/whiteRook.png"));
+	private Image whiteKnight = new Image(getClass().getResourceAsStream("/images/whiteKnight.png"));
+	private Image whiteBishop = new Image(getClass().getResourceAsStream("/images/whiteBishop.png"));
 	ArrayList<ImageView> list = new ArrayList<ImageView>();
+	Piece selected = null;
+	
 	@FXML
 	private ImageView square0;
 	@FXML
@@ -27,7 +45,7 @@ public class BoardController {
 	private ImageView square5;
 	@FXML
 	private ImageView square6;
-	@FXML
+	@FXML 
 	private ImageView square7;
 	@FXML
 	private ImageView square8;
@@ -141,12 +159,51 @@ public class BoardController {
 	private ImageView square62;
 	@FXML
 	private ImageView square63;
+
 	@FXML
     public void initialize() {
 		fillArr();
         for(int i = 0; i < board.length; i++) {
+        	list.get(i).setFitHeight(96);
+    		list.get(i).setFitWidth(96);
         	if(board[i] == null)
         		continue;
+        	if(board[i] instanceof Pawn) {
+        		if(board[i].isWhite())
+        			list.get(i).setImage(whitePawn);
+        		else
+        			list.get(i).setImage(blackPawn);
+        	}
+        	else if(board[i] instanceof Rook) {
+        		if(board[i].isWhite())
+        			list.get(i).setImage(whiteRook);
+        		else
+        			list.get(i).setImage(blackRook);
+        	}
+        	else if(board[i] instanceof Bishop) {
+        		if(board[i].isWhite())
+        			list.get(i).setImage(whiteBishop);
+        		else
+        			list.get(i).setImage(blackBishop);
+        	}
+        	else if(board[i] instanceof Knight) {
+        		if(board[i].isWhite())
+        			list.get(i).setImage(whiteKnight);
+        		else
+        			list.get(i).setImage(blackKnight);
+        	}
+        	else if(board[i] instanceof Queen) {
+        		if(board[i].isWhite())
+        			list.get(i).setImage(whiteQueen);
+        		else
+        			list.get(i).setImage(blackQueen);
+        	}
+        	else if(board[i] instanceof King) {
+        		if(board[i].isWhite())
+        			list.get(i).setImage(whiteKing);
+        		else
+        			list.get(i).setImage(blackKing);
+        	}
         }
     }
 	public BoardController(Piece[] board) {
@@ -218,5 +275,10 @@ public class BoardController {
 		list.add(square61);
 		list.add(square62);
 		list.add(square63);
+	}
+	public void onMousePressed(MouseEvent e) {
+		int col = (int) (e.getX()/100);
+		int row = (int) (e.getY()/100);
+		
 	}
 }

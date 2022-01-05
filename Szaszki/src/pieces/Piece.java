@@ -1,27 +1,26 @@
 package pieces;
 
+import java.util.ArrayList;
+
 public abstract class Piece 
 {
 	private boolean isWhite;
 	private PieceType type;
-	public int pos;
+	private int value;
 
-	protected abstract int[] possibleMoves();
+	protected abstract ArrayList<Integer> possibleMoves();
 	protected abstract boolean isMovePossible(Piece[] board);
-	protected abstract void move();
+	protected abstract ArrayList<Integer> move();
 	
-	public Piece(boolean isWhite, int pos, PieceType type) {
+	public Piece(boolean isWhite, PieceType type, int value) {
 		this.isWhite = isWhite;
-		this.pos = pos;
 		this.type = type;
+		this.value = value;
 	}
 	public boolean isWhite() {
 		return isWhite;
 	}
 	public PieceType getType() {
 		return type;
-	}
-	public int getPos() {
-		return pos;
 	}
 }
