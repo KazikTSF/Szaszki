@@ -3,10 +3,12 @@ package application;
 import java.util.ArrayList;
 
 import game.Board;
+import game.Game;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import pieces.Bishop;
 import pieces.King;
 import pieces.Knight;
@@ -15,7 +17,7 @@ import pieces.Piece;
 import pieces.Queen;
 import pieces.Rook;
 
-public class BoardController {
+public class BoardController{
 	private Board board;
 	private Image blackPawn = new Image(getClass().getResourceAsStream("/images/blackPawn.png"));
 	private Image blackKing = new Image(getClass().getResourceAsStream("/images/blackKing.png"));
@@ -161,7 +163,10 @@ public class BoardController {
 	private ImageView square62;
 	@FXML
 	private ImageView square63;
-
+	@FXML
+	private Text selectedPosText;
+	@FXML
+	private Text possibleMovesText;
 	@FXML
     public void initialize() {
 		fillArr();
@@ -295,8 +300,8 @@ public class BoardController {
 		}
 		else {
 			int move = (8*row+col)-selected.getPos();
-			ArrayList<Integer> moves = new ArrayList<Integer>();
-			moves.addAll(board.getBoard()[selectedPos].listPossibleMoves(board.getBoard()));
+			ArrayList<Integer> moves = new ArrayList<>();
+			moves.addAll(selected.getPossibleMoves());
 			for(int i = 0; i < moves.size(); i++) {
 				if(moves.get(i) == move) {
 					board.move(selected, move);
@@ -305,5 +310,19 @@ public class BoardController {
 			selected = null;
 			paint();
 		}
+		if(selected != null) {
+			String s = "Moves: ";
+			for(int i = 0; i < selected.getPossibleMoves().size(); i++) {
+				s += Game.convertFromPos(selected.getPos()+selected.getPossibleMoves().get(i));
+				s += " ";
+			}
+			selectedPosText.setText("Selected: " + Game.convertFromPos(selected.getPos()));
+			possibleMovesText.setText(s);
+		}
+		else {
+			selectedPosText.setText("Selected: None");
+			possibleMovesText.setText("Moves: ");
+		}
 	}
+
 }

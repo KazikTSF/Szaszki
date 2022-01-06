@@ -1,14 +1,10 @@
 package game;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
-import pieces.Bishop;
-import pieces.King;
-import pieces.Knight;
-import pieces.Pawn;
-import pieces.Piece;
-import pieces.Queen;
-import pieces.Rook;
+import javafx.scene.control.ChoiceDialog;
+import pieces.*;
 
 public class Board 
 {
@@ -19,6 +15,9 @@ public class Board
 	public Board(String pos) 
 	{
 		convertFEN(pos);
+		for(int i = 0; i < 64; i++)
+			if(board[i] != null)
+				board[i].update(this);
 	}
 	private void convertFEN(String position)
 	{
@@ -123,7 +122,12 @@ public class Board
 			}
 		}
 	}
-
+	private void update() {
+		for(int i = 0; i < board.length; i++) {
+			if(board[i] != null)
+				board[i].update(this);
+		}
+	}
 	public boolean isWhiteMove() {
 		return whiteMove;
 	}
@@ -134,13 +138,77 @@ public class Board
 		return enPassantPos;
 	}
 	public void move(Piece piece, int move) {
-			int finalPos = piece.getPos()+move;
-			board[finalPos] = piece;
-			board[piece.getPos()] = null;
-			board[finalPos].setPos(piece.getPos()+move);
-			if(whiteMove) 
-				whiteMove = false;
-			else
-				whiteMove = true;
+		if(piece.getType() == PieceType.PAWN) {
+			if(piece.isWhite() && piece.getPos()/8 == 1) {
+				promote(piece, move);
+				update();
+				return;
+			}
+			else if(!piece.isWhite() && piece.getPos()/8 == 6) {
+				promote(piece, move);
+				update();
+				return;
+			}
+		}
+
+		boolean enPassantMove = false;
+		int finalPos = piece.getPos()+move;
+		if(piece.getType() == PieceType.PAWN) {
+			if(move == 16 || move == -16) {
+				enPassantPos = piece.getPos() + (move / 2);
+				enPassantMove = true;
+			}
+			else if(piece.getPos()+move == enPassantPos)
+				if(enPassantPos > 32)
+					board[enPassantPos - 8] = null;
+				else
+					board[enPassantPos + 8] = null;
+		}
+		board[finalPos] = piece;
+		board[piece.getPos()] = null;
+		board[finalPos].setPos(piece.getPos()+move);
+		update();
+		if(whiteMove)
+			whiteMove = false;
+		else
+			whiteMove = true;
+		if(!enPassantMove)
+			enPassantPos = -1;
+}
+	public boolean promote(Piece piece, int move) {
+		int finalPos = piece.getPos()+move;
+		ArrayList<String> choices = new ArrayList<>();
+		choices.add("QUEEN");
+		choices.add("BISHOP");
+		choices.add("ROOK");
+		choices.add("KNIGHT");
+
+		ChoiceDialog<String> dialog = new ChoiceDialog<>("QUEEN", choices);
+		dialog.setTitle("Promotion");
+		dialog.setHeaderText("Your pawn made it!!!");
+		dialog.setContentText("Choose your promotion:");
+		Optional<String> result = dialog.showAndWait();
+		String choice;
+		if (result.isPresent())
+			choice = result.get();
+		else
+			return false;
+		board[piece.getPos()] = null;
+		switch (choice) {
+			case "QUEEN":
+				board[finalPos] = new Queen(piece.isWhite(), piece.getPos());
+				break;
+			case "BISHOP":
+				board[finalPos] = new Bishop(piece.isWhite(), piece.getPos());
+				break;
+			case "ROOK":
+				board[finalPos] = new Rook(piece.isWhite(), piece.getPos());
+				break;
+			case "KNIGHT":
+				board[finalPos] = new Knight(piece.isWhite(), piece.getPos());
+				break;
+		}
+
+		return true;
 	}
 }

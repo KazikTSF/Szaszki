@@ -4,24 +4,36 @@ import java.util.ArrayList;
 
 public interface SlideMove {
 	
-	static ArrayList<Integer> slideMove(int pos) {
+	static ArrayList<ArrayList<Integer>> slideMove(int pos) {
 		
-		ArrayList<Integer> moves = new ArrayList<Integer>();
-		int row = pos/8;
+		ArrayList<ArrayList<Integer>> moves = new ArrayList<>();
+		// 0 - up
+		// 1 - right
+		// 2 - down
+		// 3 - left
 		int col = pos%8;
-		
-		for(int i = col; i < 63; i+=8) {
-			int currPos = row*8+i;
-			if(currPos == pos)
-				continue;
-			moves.add(currPos-pos);
+		ArrayList<Integer> temp = new ArrayList<>();
+		for(int i = -8; pos+i > 0; i-=8)
+			temp.add(i);
+		moves.add(temp);
+		temp = new ArrayList<>();
+		for(int i = 1; col < 7; i++) {
+			col = (pos+i)%8;
+			temp.add(i);
 		}
-		for(int i = 0; i < 8; i++) {
-			int currPos = row*8+i;
-			if(currPos == pos)
-				continue;
-			moves.add(currPos-pos);
+		moves.add(temp);
+		temp = new ArrayList<>();
+		col = pos%7;
+		for(int i = 8; pos+i < 63; i+=8)
+			temp.add(i);
+		moves.add(temp);
+		temp = new ArrayList<>();
+		for(int i = -1; col > 0; i--) {
+			col = (pos+i)%8;
+			temp.add(i);
 		}
+		moves.add(temp);
+		temp = new ArrayList<>();
 		return moves;
 	}
 }

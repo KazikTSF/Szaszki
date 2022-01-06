@@ -4,7 +4,6 @@ import game.Game;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import pieces.SlideMove;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -18,7 +17,7 @@ public class Main extends Application
 	{
 		try 
 		{
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/board.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/game/board.fxml"));
 			BoardController con = new BoardController(game.getBoard());
 			loader.setController(con);
 			Parent root = loader.load();

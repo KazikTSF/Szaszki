@@ -1,5 +1,7 @@
 package pieces;
 
+import game.Board;
+
 import java.util.ArrayList;
 
 public class King extends Piece implements SlideMove {
@@ -10,13 +12,13 @@ public class King extends Piece implements SlideMove {
 	
 	public King(boolean isWhite, int pos, boolean canQCastle, boolean canKCastle) {
 		super(isWhite, PieceType.KING, 200);
+		this.pos = pos;
 		this.canKCastle = canKCastle;
 		this.canQCastle = canQCastle;
-		this.pos = pos;
 	}
 	@Override
 	public ArrayList<Integer> possibleMoves() {
-		ArrayList<Integer> fmoves = new ArrayList<Integer>();
+		ArrayList<Integer> fmoves = new ArrayList<>();
 		int[] moves = new int[8];
 		int row = pos/8;
 		int col = pos%8;
@@ -58,17 +60,16 @@ public class King extends Piece implements SlideMove {
 	}
 
 	@Override
-	public boolean isMovePossible(Piece[] board, int move) {
-		if(super.isWhite()) {
-			if(board[pos+move] == null || !board[pos+move].isWhite()) {
+	public boolean isMovePossibleWhite(Board board, int move) {
+			if(board.getBoard()[pos+move] == null || !board.getBoard()[pos+move].isWhite())
 				return true;
-			}
-		}
-		if(!super.isWhite()) {
-			if(board[pos+move] == null || board[pos+move].isWhite()) {
-				return true;
-			}
-		}
+		return false;
+	}
+
+	@Override
+	public boolean isMovePossibleBlack(Board board, int move) {
+		if(board.getBoard()[pos+move] == null || board.getBoard()[pos+move].isWhite())
+			return true;
 		return false;
 	}
 

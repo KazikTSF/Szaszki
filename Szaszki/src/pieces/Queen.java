@@ -1,5 +1,7 @@
 package pieces;
 
+import game.Board;
+
 import java.util.ArrayList;
 
 public class Queen extends Piece implements SlideMove {
@@ -17,10 +19,16 @@ public class Queen extends Piece implements SlideMove {
 	}
 
 	@Override
-	public boolean isMovePossible(Piece[] board, int move) {
+	public boolean isMovePossibleWhite(Board board, int move) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public boolean isMovePossibleBlack(Board board, int move) {
+		return false;
+	}
+
 	@Override
 	public int getPos() {
 		return pos;
@@ -32,7 +40,7 @@ public class Queen extends Piece implements SlideMove {
 	}
 
 	@Override
-	public ArrayList<Integer> listPossibleMoves(Piece[] board) {
+	public ArrayList<Integer> listPossibleMoves(Board board, boolean isWhite) {
 		// TODO Auto-generated method stub
 		return null;
 	}
