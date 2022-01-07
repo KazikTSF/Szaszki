@@ -4,37 +4,34 @@ import game.Board;
 
 import java.util.ArrayList;
 
-public abstract class Piece
-{
-	private boolean isWhite;
-	private PieceType type;
-	private int value;
+public abstract class Piece {
+	private final boolean isWhite;
+	private final PieceType type;
+	private final int value;
 	private ArrayList<Integer> possibleMoves = new ArrayList<>();
 	protected abstract ArrayList<Integer> possibleMoves();
+
 	public abstract boolean isMovePossibleWhite(Board board, int move);
 	public abstract boolean isMovePossibleBlack(Board board, int move);
 	public abstract int getPos();
 	public abstract void setPos(int pos);
 
 	public ArrayList<Integer> listPossibleMoves(Board board, boolean isWhite) {
-		ArrayList<Integer> moves = new ArrayList<>();
 		ArrayList<Integer> fmoves = new ArrayList<>();
-		moves.addAll(possibleMoves());
-		for(int i = 0; i < moves.size(); i++) {
+		ArrayList<Integer> moves = new ArrayList<>(possibleMoves());
+		for(int move : moves) {
 			if(isWhite) {
-				if (isMovePossibleWhite(board, moves.get(i)))
-					fmoves.add(moves.get(i));
+				if (isMovePossibleWhite(board, move))
+					fmoves.add(move);
 			}
 			else {
-				if (isMovePossibleBlack(board, moves.get(i)))
-					fmoves.add(moves.get(i));
+				if (isMovePossibleBlack(board, move))
+					fmoves.add(move);
 			}
 		}
 		return fmoves;
 	}
 	public void update(Board board) {
-		if(type != PieceType.KING && type != PieceType.ROOK && type != PieceType.PAWN)
-			return;
 		possibleMoves = new ArrayList<>();
 		possibleMoves.addAll(listPossibleMoves(board, isWhite));
 	}
@@ -50,7 +47,6 @@ public abstract class Piece
 	public PieceType getType() {
 		return type;
 	}
-
 	public ArrayList<Integer> getPossibleMoves() {
 		return possibleMoves;
 	}

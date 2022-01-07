@@ -4,7 +4,7 @@ import game.Board;
 
 import java.util.ArrayList;
 
-public class Bishop extends Piece {
+public class Bishop extends Piece implements CrossMove {
 
 	private int pos;
 	
@@ -15,19 +15,104 @@ public class Bishop extends Piece {
 
 	@Override
 	public ArrayList<Integer> possibleMoves() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Integer> moves = new ArrayList<>();
+		ArrayList<ArrayList<Integer>> temp = new ArrayList<>(CrossMove.crossMove(pos));
+		for(int i = 0; i < 4; i++)
+			moves.addAll(temp.get(i));
+		return moves;
 	}
 
 	@Override
 	public boolean isMovePossibleWhite(Board board, int move) {
-		// TODO Auto-generated method stub
-		return false;
+		int finalPos = pos+move;
+		if(move < 0 && move%7 == 0) {
+			for (int i = pos - 7; i >= finalPos; i -= 7) {
+				if (board.getBoard()[i] != null) {
+					if (i - pos == move && !board.getBoard()[i].isWhite())
+						break;
+					return false;
+				}
+			}
+			return true;
+		}
+		else if(move > 0 && move%9 == 0) {
+			for (int i = pos + 9; i <= finalPos; i += 9) {
+				if (board.getBoard()[i] != null) {
+					if (i - pos == move && !board.getBoard()[i].isWhite())
+						break;
+					return false;
+				}
+			}
+			return true;
+		}
+		else if(move > 0 && move%7 == 0) {
+			for (int i = pos + 7; i <= finalPos; i += 7) {
+				if (board.getBoard()[i] != null) {
+					if (i - pos == move && !board.getBoard()[i].isWhite())
+						break;
+					return false;
+				}
+			}
+			return true;
+		}
+		else {
+			for (int i = pos - 9; i >= finalPos; i -= 9) {
+				if (board.getBoard()[i] != null) {
+					if (i - pos == move && !board.getBoard()[i].isWhite())
+						break;
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 
 	@Override
 	public boolean isMovePossibleBlack(Board board, int move) {
-		return false;
+		int finalPos = pos+move;
+		if(move < 0 && move%7 == 0) {
+			for (int i = pos - 7; i >= finalPos; i -= 7) {
+				if (board.getBoard()[i] != null) {
+					if (i - pos == move && board.getBoard()[i].isWhite())
+						break;
+					return false;
+				}
+			}
+			return true;
+		}
+		else if(move > 0 && move%9 == 0) {
+			for (int i = pos + 9; i <= finalPos; i += 9) {
+				if (board.getBoard()[i] != null) {
+					if (i - pos == move && board.getBoard()[i].isWhite())
+						break;
+					return false;
+				}
+			}
+			return true;
+		}
+		else if(move > 0 && move%7 == 0) {
+			for (int i = pos + 7; i <= finalPos; i += 7) {
+				if (board.getBoard()[i] != null) {
+					if (i - pos == move && board.getBoard()[i].isWhite())
+						break;
+					return false;
+				}
+			}
+			return true;
+		}
+		else if(move < 0 && move%9 == 0) {
+			for (int i = pos - 9; i >= finalPos; i -= 9) {
+				if (board.getBoard()[i] != null) {
+					if (i - pos == move && board.getBoard()[i].isWhite())
+						break;
+					return false;
+				}
+			}
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override
@@ -38,11 +123,5 @@ public class Bishop extends Piece {
 	@Override
 	public void setPos(int pos) {
 		this.pos = pos;
-	}
-
-	@Override
-	public ArrayList<Integer> listPossibleMoves(Board board, boolean isWhite) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

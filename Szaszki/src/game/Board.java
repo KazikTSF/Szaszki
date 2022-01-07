@@ -11,7 +11,8 @@ public class Board
 	boolean whiteMove;
 	Piece[] board = new Piece[64];
 	int enPassantPos = -1;
-	
+	ArrayList<Integer> attackedSquaresWhite = new ArrayList<>();
+	ArrayList<Integer> attackedSquaresBlack = new ArrayList<>();
 	public Board(String pos) 
 	{
 		convertFEN(pos);
@@ -122,37 +123,90 @@ public class Board
 			}
 		}
 	}
-	private void update() {
+	public void update() {
+		attackedSquaresWhite = new ArrayList<>();
+		attackedSquaresBlack = new ArrayList<>();
 		for(int i = 0; i < board.length; i++) {
-			if(board[i] != null)
+			if(board[i] != null) {
 				board[i].update(this);
+			}
 		}
 	}
-	public boolean isWhiteMove() {
-		return whiteMove;
-	}
-	public Piece[] getBoard() {
-		return board;
-	}
-	public int getEnPassantPos() {
-		return enPassantPos;
-	}
+
 	public void move(Piece piece, int move) {
+		if(whiteMove)
+			whiteMove = false;
+		else
+			whiteMove = true;
 		if(piece.getType() == PieceType.PAWN) {
 			if(piece.isWhite() && piece.getPos()/8 == 1) {
+				enPassantPos = -1;
 				if(!promote(piece, move))
 					return;
 				update();
 				return;
 			}
 			else if(!piece.isWhite() && piece.getPos()/8 == 6) {
+				enPassantPos = -1;
 				if(!promote(piece, move))
 					return;
 				update();
 				return;
 			}
 		}
+		else if(piece.getType() == PieceType.KING) {
 
+			if(move == 2) {
+				if(piece.isWhite()) {
+					KCastleWhite((King) piece);
+					update();
+					enPassantPos = -1;
+					return;
+				}
+				else {
+					KCastleBlack((King) piece);
+					update();
+					enPassantPos = -1;
+					return;
+				}
+			}
+			else if(move == -2) {
+				if(piece.isWhite()) {
+					QCastleWhite((King) piece);
+					update();
+					enPassantPos = -1;
+					return;
+				}
+				else {
+					QCastleBlack((King) piece);
+					update();
+					enPassantPos = -1;
+					return;
+				}
+			}
+			else
+				piece = new King(piece.isWhite(), piece.getPos(), false, false);
+		}
+		else if(piece.getType() == PieceType.ROOK) {
+			King temp = (King)board[60];
+			if(temp != null) {
+				if (piece.isWhite()) {
+					if (board[60].getType() == PieceType.KING) {
+						if (piece.getPos() == 63)
+							board[60] = new King(true, 60, temp.canQCastle(), false);
+						if (piece.getPos() == 56)
+							board[60] = new King(true, 60, false, temp.canQCastle());
+					}
+				} else {
+					if (board[4].getType() == PieceType.KING) {
+						if (piece.getPos() == 7)
+							board[4] = new King(false, 4, temp.canQCastle(), false);
+						if (piece.getPos() == 0)
+							board[4] = new King(false, 4, false, temp.canQCastle());
+					}
+				}
+			}
+		}
 		boolean enPassantMove = false;
 		int finalPos = piece.getPos()+move;
 		if(piece.getType() == PieceType.PAWN) {
@@ -170,10 +224,6 @@ public class Board
 		board[piece.getPos()] = null;
 		board[finalPos].setPos(piece.getPos()+move);
 		update();
-		if(whiteMove)
-			whiteMove = false;
-		else
-			whiteMove = true;
 		if(!enPassantMove)
 			enPassantPos = -1;
 }
@@ -212,15 +262,55 @@ public class Board
 		}
 		return true;
 	}
-	public boolean Kcastle(King king, int move) {
-		if(!king.canKCastle())
-			return false;
-		if(move > 0) {
-
-		}
-		else {
-
-		}
-		return false;
+	public void KCastleWhite(King king) {
+		Rook rook = (Rook)board[63];
+		king.setPos(62);
+		rook.setPos(61);
+		board[62] = new King(king.isWhite(), king.getPos(), false, false);
+		board[61] = rook;
+		board[60] = null;
+		board[63] = null;
+	}
+	public void KCastleBlack(King king) {
+		Rook rook = (Rook)board[7];
+		king.setPos(6);
+		rook.setPos(5);
+		board[6] = new King(king.isWhite(), king.getPos(), false, false);
+		board[5] = rook;
+		board[4] = null;
+		board[7] = null;
+	}
+	public void QCastleWhite(King king) {
+		Rook rook = (Rook)board[56];
+		king.setPos(58);
+		rook.setPos(59);
+		board[58] = new King(king.isWhite(), king.getPos(), false, false);
+		board[59] = rook;
+		board[60] = null;
+		board[56] = null;
+	}
+	public void QCastleBlack(King king) {
+		Rook rook = (Rook)board[0];
+		king.setPos(2);
+		rook.setPos(3);
+		board[2] = new King(king.isWhite(), king.getPos(), false, false);
+		board[3] = rook;
+		board[4] = null;
+		board[0] = null;
+	}
+	public boolean isWhiteMove() {
+		return whiteMove;
+	}
+	public Piece[] getBoard() {
+		return board;
+	}
+	public int getEnPassantPos() {
+		return enPassantPos;
+	}
+	public ArrayList<Integer> getAttackedSquaresWhite() {
+		return attackedSquaresWhite;
+	}
+	public ArrayList<Integer> getAttackedSquaresBlack() {
+		return attackedSquaresBlack;
 	}
 }

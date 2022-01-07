@@ -170,6 +170,7 @@ public class BoardController{
 	@FXML
     public void initialize() {
 		fillArr();
+		board.update();
         paint();
     }
 	private void paint() {

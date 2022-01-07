@@ -19,7 +19,7 @@ public class King extends Piece implements SlideMove {
 	@Override
 	public ArrayList<Integer> possibleMoves() {
 		ArrayList<Integer> fmoves = new ArrayList<>();
-		int[] moves = new int[8];
+		int[] moves = new int[10];
 		int row = pos/8;
 		int col = pos%8;
 		moves[0] = -9;
@@ -30,6 +30,8 @@ public class King extends Piece implements SlideMove {
 		moves[5] = 9;
 		moves[6] = 8;
 		moves[7] = 7;
+		moves[8] = 2;
+		moves[9] = -2;
 		if(col == 0) {
 			moves[0] = 64;
 			moves[3] = 64;
@@ -51,7 +53,7 @@ public class King extends Piece implements SlideMove {
 			moves[6] = 64;
 			moves[7] = 64;
 		}
-		for(int i = 0; i < moves.length; i++) {
+		for(int i = 0; i < 10; i++) {
 			if(moves[i] != 64)
 				fmoves.add(moves[i]);
 		}
@@ -61,13 +63,109 @@ public class King extends Piece implements SlideMove {
 
 	@Override
 	public boolean isMovePossibleWhite(Board board, int move) {
-			if(board.getBoard()[pos+move] == null || !board.getBoard()[pos+move].isWhite())
-				return true;
+		ArrayList<Integer> attackedSquares;
+		attackedSquares = board.getAttackedSquaresWhite();
+		for(int i = 0; i < attackedSquares.size(); i++) {
+			if(pos+move == attackedSquares.get(i))
+				return false;
+		}
+		if(move == 2) {
+			if(!canKCastle)
+				return false;
+			for(int i = 0; i < attackedSquares.size(); i++) {
+				if(attackedSquares.get(i) == 62)
+					return false;
+				if(attackedSquares.get(i) == 61)
+					return false;
+				if(attackedSquares.get(i) == 60)
+					return false;
+			}
+			if(board.getBoard()[62] != null)
+				return false;
+			if(board.getBoard()[61] != null)
+				return false;
+			if(board.getBoard()[63] == null)
+				return false;
+			if(board.getBoard()[63].getType() != PieceType.ROOK || !board.getBoard()[63].isWhite())
+				return false;
+		}
+		else if(move == -2) {
+			if(!canQCastle)
+				return false;
+			for(int i = 0; i < attackedSquares.size(); i++) {
+				if (attackedSquares.get(i) == 58)
+					return false;
+				if (attackedSquares.get(i) == 59)
+					return false;
+				if (attackedSquares.get(i) == 60)
+					return false;
+			}
+			if(board.getBoard()[59] != null)
+				return false;
+			if(board.getBoard()[58] != null)
+				return false;
+			if(board.getBoard()[57] != null)
+				return false;
+			if(board.getBoard()[56] == null)
+				return false;
+			if(board.getBoard()[56].getType() != PieceType.ROOK || !board.getBoard()[56].isWhite())
+				return false;
+		}
+		if(board.getBoard()[pos+move] == null || !board.getBoard()[pos+move].isWhite())
+			return true;
 		return false;
 	}
 
 	@Override
 	public boolean isMovePossibleBlack(Board board, int move) {
+		ArrayList<Integer> attackedSquares;
+		attackedSquares = board.getAttackedSquaresBlack();
+		for(int i = 0; i < attackedSquares.size(); i++) {
+			if(pos+move == attackedSquares.get(i))
+				return false;
+		}
+		if(move == 2) {
+			if(!canKCastle())
+				return false;
+			for(int i = 0; i < attackedSquares.size(); i++) {
+				if(attackedSquares.get(i) == 6)
+					return false;
+				if(attackedSquares.get(i) == 5)
+					return false;
+				if(attackedSquares.get(i) == 4)
+					return false;
+			}
+			if(board.getBoard()[7] == null)
+				return false;
+			if(board.getBoard()[6] != null)
+				return false;
+			if(board.getBoard()[5] != null)
+				return false;
+			if(board.getBoard()[7].getType() != PieceType.ROOK || board.getBoard()[7].isWhite())
+				return false;
+		}
+		else if(move == -2) {
+			if(!canQCastle)
+				return false;
+			for(int i = 0; i < attackedSquares.size(); i++) {
+				if (attackedSquares.get(i) == 2)
+					return false;
+				if (attackedSquares.get(i) == 3)
+					return false;
+				if (attackedSquares.get(i) == 4)
+					return false;
+			}
+			if(board.getBoard()[0] == null)
+				return false;
+			if(board.getBoard()[1] != null)
+				return false;
+			if(board.getBoard()[2] != null)
+				return false;
+			if(board.getBoard()[3] != null)
+				return false;
+			if(board.getBoard()[0].getType() != PieceType.ROOK || board.getBoard()[0].isWhite())
+				return false;
+		}
 		if(board.getBoard()[pos+move] == null || board.getBoard()[pos+move].isWhite())
 			return true;
 		return false;
@@ -76,18 +174,10 @@ public class King extends Piece implements SlideMove {
 	public boolean canQCastle() {
 		return canQCastle;
 	}
-
-	public void setCanQCastle(boolean canQCastle) {
-		this.canQCastle = canQCastle;
-	}
-
 	public boolean canKCastle() {
 		return canKCastle;
 	}
 
-	public void setCanKCastle(boolean canKCastle) {
-		this.canKCastle = canKCastle;
-	}
 	@Override
 	public int getPos() {
 		return pos;

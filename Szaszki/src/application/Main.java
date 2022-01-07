@@ -8,10 +8,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
+import java.util.Objects;
+
 
 public class Main extends Application 
 {
-	Game game = new Game("1k1r4/pp1b1R2/3q2pp/4p3/2B5/4Q3/PPP2B2/2K5 b - -");
+	Game game = new Game("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -");
 	@Override
 	public void start(Stage primaryStage) 
 	{
@@ -24,7 +26,7 @@ public class Main extends Application
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Szaszki");
-			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/blackKing.png")));
+			primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/blackKing.png"))));
 			primaryStage.show();
 		}
 		catch(Exception e) 

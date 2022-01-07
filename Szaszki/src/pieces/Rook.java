@@ -15,8 +15,7 @@ public class Rook extends Piece implements SlideMove {
 	@Override
 	public ArrayList<Integer> possibleMoves() {
 		ArrayList<Integer> moves = new ArrayList<>();
-		ArrayList<ArrayList<Integer>> temp = new ArrayList<>();
-		temp.addAll(SlideMove.slideMove(pos));
+		ArrayList<ArrayList<Integer>> temp = new ArrayList<>(SlideMove.slideMove(pos));
 		for(int i = 0; i < 4; i++)
 			moves.addAll(temp.get(i));
 
@@ -122,8 +121,7 @@ public class Rook extends Piece implements SlideMove {
 	@Override
 	public ArrayList<Integer> listPossibleMoves(Board board, boolean isWhite) {
 		ArrayList<Integer> moves = new ArrayList<>();
-		ArrayList<ArrayList<Integer>> temp = new ArrayList<>();
-		temp.addAll(SlideMove.slideMove(pos));
+		ArrayList<ArrayList<Integer>> temp = new ArrayList<>(SlideMove.slideMove(pos));
 		for(int i = 0; i < temp.size(); i++) {
 			for (int j = 0; j < temp.get(i).size(); j++) {
 				if(isWhite) {
