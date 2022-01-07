@@ -1,18 +1,18 @@
 package game;
 
-import java.util.ArrayList;
-import java.util.Optional;
-
 import javafx.scene.control.ChoiceDialog;
 import pieces.*;
+
+import java.util.ArrayList;
+import java.util.Optional;
 
 public class Board 
 {
 	boolean whiteMove;
 	Piece[] board = new Piece[64];
 	int enPassantPos = -1;
-	ArrayList<Integer> attackedSquaresWhite = new ArrayList<>();
-	ArrayList<Integer> attackedSquaresBlack = new ArrayList<>();
+	ArrayList<Move> possibleMovesWhite = new ArrayList();
+	ArrayList<Move> possibleMovesBlack = new ArrayList<>();
 	public Board(String pos) 
 	{
 		convertFEN(pos);
@@ -124,35 +124,54 @@ public class Board
 		}
 	}
 	public void update() {
-		attackedSquaresWhite = new ArrayList<>();
-		attackedSquaresBlack = new ArrayList<>();
+		possibleMovesWhite = new ArrayList();
+		possibleMovesBlack = new ArrayList<>();
 		for(int i = 0; i < board.length; i++) {
 			if(board[i] != null) {
-				board[i].update(this);
+					board[i].update(this);
+					ArrayList<Integer> moves = board[i].getPossibleMoves();
+					if(board[i].isWhite()) {
+						for(int move : moves) {
+							possibleMovesWhite.add(new Move(move, board[i].getPos(), board[i]));
+						}
+					}
+					else {
+						for(int move : moves) {
+							possibleMovesBlack.add(new Move(move, board[i].getPos(), board[i]));
+						}
+					}
 			}
 		}
+
 	}
 
 	public void move(Piece piece, int move) {
+		possibleMovesWhite = new ArrayList();
+		possibleMovesBlack = new ArrayList<>();
 		if(whiteMove)
 			whiteMove = false;
 		else
 			whiteMove = true;
 		if(piece.getType() == PieceType.PAWN) {
-			if(piece.isWhite() && piece.getPos()/8 == 1) {
-				enPassantPos = -1;
-				if(!promote(piece, move))
+			if(piece.isWhite()) {
+				if(piece.getPos()/8 == 1) {
+					enPassantPos = -1;
+					if(!promote(piece, move))
+						return;
+					update();
 					return;
-				update();
-				return;
+				}
 			}
-			else if(!piece.isWhite() && piece.getPos()/8 == 6) {
-				enPassantPos = -1;
-				if(!promote(piece, move))
+			else {
+				if(piece.getPos()/8 == 6) {
+					enPassantPos = -1;
+					if(!promote(piece, move))
+						return;
+					update();
 					return;
-				update();
-				return;
+				}
 			}
+
 		}
 		else if(piece.getType() == PieceType.KING) {
 
@@ -307,10 +326,12 @@ public class Board
 	public int getEnPassantPos() {
 		return enPassantPos;
 	}
-	public ArrayList<Integer> getAttackedSquaresWhite() {
-		return attackedSquaresWhite;
+
+	public ArrayList<Move> getPossibleMovesWhite() {
+		return possibleMovesWhite;
 	}
-	public ArrayList<Integer> getAttackedSquaresBlack() {
-		return attackedSquaresBlack;
+
+	public ArrayList<Move> getPossibleMovesBlack() {
+		return possibleMovesBlack;
 	}
 }

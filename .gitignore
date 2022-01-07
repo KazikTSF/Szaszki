@@ -34,38 +34,38 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 # User-specific stuff
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/**/usage.statistics.xml
-.idea/**/dictionaries
-.idea/**/shelf
+Szaszki/.idea/**/workspace.xml
+Szaszki/.idea/**/tasks.xml
+Szaszki/.idea/**/usage.statistics.xml
+Szaszki/.idea/**/dictionaries
+Szaszki/.idea/**/shelf
 
 # AWS User-specific
-.idea/**/aws.xml
+Szaszki/.idea/**/aws.xml
 
 # Generated files
-.idea/**/contentModel.xml
+Szaszki/.idea/**/contentModel.xml
 
 # Sensitive or high-churn files
-.idea/**/dataSources/
-.idea/**/dataSources.ids
-.idea/**/dataSources.local.xml
-.idea/**/sqlDataSources.xml
-.idea/**/dynamic.xml
-.idea/**/uiDesigner.xml
-.idea/**/dbnavigator.xml
+Szaszki/.idea/**/dataSources/
+Szaszki/.idea/**/dataSources.ids
+Szaszki/.idea/**/dataSources.local.xml
+Szaszki/.idea/**/sqlDataSources.xml
+Szaszki/.idea/**/dynamic.xml
+Szaszki/.idea/**/uiDesigner.xml
+Szaszki/.idea/**/dbnavigator.xml
 
 # Gradle
-.idea/**/gradle.xml
-.idea/**/libraries
+Szaszki/.idea/**/gradle.xml
+Szaszki/.idea/**/libraries
 
 # Gradle and Maven with auto-import
-.idea/artifacts
-.idea/compiler.xml
-.idea/jarRepositories.xml
-.idea/modules.xml
+Szaszki/.idea/artifacts
+Szaszki/.idea/compiler.xml
+Szaszki/.idea/jarRepositories.xml
+Szaszki/.idea/modules.xml
 .idea/*.iml
-.idea/modules
+Szaszki/.idea/modules
 *.iml
 *.ipr
 
@@ -73,7 +73,7 @@ buildNumber.properties
 cmake-build-*/
 
 # Mongo Explorer plugin
-.idea/**/mongoSettings.xml
+Szaszki/.idea/**/mongoSettings.xml
 
 # File-based project format
 *.iws
@@ -88,10 +88,10 @@ out/
 atlassian-ide-plugin.xml
 
 # Cursive Clojure plugin
-.idea/replstate.xml
+Szaszki/.idea/replstate.xml
 
 # SonarLint plugin
-.idea/sonarlint/
+Szaszki/.idea/sonarlint/
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
@@ -100,7 +100,7 @@ crashlytics-build.properties
 fabric.properties
 
 # Editor-based Rest Client
-.idea/httpRequests
+Szaszki/.idea/httpRequests
 
 # Android studio 3.1+ serialized cache file
-.idea/caches/build_file_checksums.ser
+Szaszki/.idea/caches/build_file_checksums.ser

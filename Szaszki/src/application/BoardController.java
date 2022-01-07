@@ -1,21 +1,22 @@
 package application;
 
-import java.util.ArrayList;
-
 import game.Board;
 import game.Game;
+import game.Move;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import pieces.Bishop;
-import pieces.King;
-import pieces.Knight;
-import pieces.Pawn;
-import pieces.Piece;
-import pieces.Queen;
-import pieces.Rook;
+import pieces.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class BoardController{
 	private Board board;
@@ -34,7 +35,9 @@ public class BoardController{
 	ArrayList<ImageView> list = new ArrayList<ImageView>();
 	Piece selected = null;
 	int selectedPos = -1;
-	
+
+	@FXML
+	private GridPane grid;
 	@FXML
 	private ImageView square0;
 	@FXML
@@ -297,7 +300,8 @@ public class BoardController{
 			if(board.getBoard()[selectedPos] == null) 
 				return;
 			if((board.isWhiteMove() && board.getBoard()[selectedPos].isWhite()) || (!board.isWhiteMove() && !board.getBoard()[selectedPos].isWhite()))
-				selected = board.getBoard()[selectedPos];	
+				selected = board.getBoard()[selectedPos];
+			paintPossibleMoves(selected.getPossibleMoves());
 		}
 		else {
 			int move = (8*row+col)-selected.getPos();
@@ -310,6 +314,7 @@ public class BoardController{
 			}
 			selected = null;
 			paint();
+			grid.getChildren().removeAll(grid.getChildren());
 		}
 		if(selected != null) {
 			String s = "Moves: ";
@@ -325,5 +330,15 @@ public class BoardController{
 			possibleMovesText.setText("Moves: ");
 		}
 	}
-
+	void paintPossibleMoves(ArrayList<Integer> moves) {
+		for(int move : moves) {
+			move = move+selectedPos;
+			int col = move%8;
+			int row = move/8;
+			Pane pane = new Pane();
+			pane.setMaxSize(99, 99);
+			pane.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+			grid.add(pane, col, row);
+		}
+	}
 }

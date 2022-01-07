@@ -9,8 +9,8 @@ public abstract class Piece {
 	private final PieceType type;
 	private final int value;
 	private ArrayList<Integer> possibleMoves = new ArrayList<>();
-	protected abstract ArrayList<Integer> possibleMoves();
 
+	protected abstract ArrayList<Integer> possibleMoves();
 	public abstract boolean isMovePossibleWhite(Board board, int move);
 	public abstract boolean isMovePossibleBlack(Board board, int move);
 	public abstract int getPos();
