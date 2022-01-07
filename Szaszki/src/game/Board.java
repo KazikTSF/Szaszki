@@ -140,12 +140,14 @@ public class Board
 	public void move(Piece piece, int move) {
 		if(piece.getType() == PieceType.PAWN) {
 			if(piece.isWhite() && piece.getPos()/8 == 1) {
-				promote(piece, move);
+				if(!promote(piece, move))
+					return;
 				update();
 				return;
 			}
 			else if(!piece.isWhite() && piece.getPos()/8 == 6) {
-				promote(piece, move);
+				if(!promote(piece, move))
+					return;
 				update();
 				return;
 			}
@@ -208,7 +210,17 @@ public class Board
 				board[finalPos] = new Knight(piece.isWhite(), piece.getPos());
 				break;
 		}
-
 		return true;
+	}
+	public boolean Kcastle(King king, int move) {
+		if(!king.canKCastle())
+			return false;
+		if(move > 0) {
+
+		}
+		else {
+
+		}
+		return false;
 	}
 }
