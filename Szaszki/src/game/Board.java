@@ -11,8 +11,9 @@ public class Board
 	boolean whiteMove;
 	Piece[] board = new Piece[64];
 	int enPassantPos = -1;
-	ArrayList<Move> possibleMovesWhite = new ArrayList();
+	ArrayList<Move> possibleMovesWhite = new ArrayList<>();
 	ArrayList<Move> possibleMovesBlack = new ArrayList<>();
+	Move lastMove;
 	public Board(String pos) 
 	{
 		convertFEN(pos);
@@ -43,28 +44,16 @@ public class Board
 				spacecount++;
 				continue;
 			}
-			switch(pos[size-i]) {
-				case 'K':
-					Kcastle = true;
-					break;
-				case 'Q':
-					Qcastle = true;
-					break;
-				case 'q':
-					qcastle = true;
-					break;
-				case 'k':
-					kcastle = true;
-					break;
-				case 'w':
-					whiteMove = true;
-					break;
-				case 'b':
-					whiteMove = false;
-					break;
+			switch (pos[size - i]) {
+				case 'K' -> Kcastle = true;
+				case 'Q' -> Qcastle = true;
+				case 'q' -> qcastle = true;
+				case 'k' -> kcastle = true;
+				case 'w' -> whiteMove = true;
+				case 'b' -> whiteMove = false;
 			}
 		}
-		int currentPos = 0;
+		int currentPos;
 		int i = 0;
 		
 		for(int row = 0; row < 8; row++) 
@@ -124,39 +113,35 @@ public class Board
 		}
 	}
 	public void update() {
-		possibleMovesWhite = new ArrayList();
+		possibleMovesWhite = new ArrayList<>();
 		possibleMovesBlack = new ArrayList<>();
-		for(int i = 0; i < board.length; i++) {
-			if(board[i] != null) {
-					board[i].update(this);
-					ArrayList<Integer> moves = board[i].getPossibleMoves();
-					if(board[i].isWhite()) {
-						for(int move : moves) {
-							possibleMovesWhite.add(new Move(move, board[i].getPos(), board[i]));
-						}
+		for (Piece piece : board) {
+			if (piece != null) {
+				piece.update(this);
+				ArrayList<Integer> moves = piece.getPossibleMoves();
+				if (piece.isWhite()) {
+					for (int move : moves) {
+						possibleMovesWhite.add(new Move(move, piece.getPos(), piece));
 					}
-					else {
-						for(int move : moves) {
-							possibleMovesBlack.add(new Move(move, board[i].getPos(), board[i]));
-						}
+				} else {
+					for (int move : moves) {
+						possibleMovesBlack.add(new Move(move, piece.getPos(), piece));
 					}
+				}
 			}
 		}
 
 	}
 
 	public void move(Piece piece, int move) {
-		possibleMovesWhite = new ArrayList();
+		possibleMovesWhite = new ArrayList<>();
 		possibleMovesBlack = new ArrayList<>();
-		if(whiteMove)
-			whiteMove = false;
-		else
-			whiteMove = true;
+		whiteMove = !whiteMove;
 		if(piece.getType() == PieceType.PAWN) {
 			if(piece.isWhite()) {
 				if(piece.getPos()/8 == 1) {
 					enPassantPos = -1;
-					if(!promote(piece, move))
+					if(promote(piece, move))
 						return;
 					update();
 					return;
@@ -165,7 +150,7 @@ public class Board
 			else {
 				if(piece.getPos()/8 == 6) {
 					enPassantPos = -1;
-					if(!promote(piece, move))
+					if(promote(piece, move))
 						return;
 					update();
 					return;
@@ -178,30 +163,24 @@ public class Board
 			if(move == 2) {
 				if(piece.isWhite()) {
 					KCastleWhite((King) piece);
-					update();
-					enPassantPos = -1;
-					return;
 				}
 				else {
 					KCastleBlack((King) piece);
-					update();
-					enPassantPos = -1;
-					return;
 				}
+				update();
+				enPassantPos = -1;
+				return;
 			}
 			else if(move == -2) {
 				if(piece.isWhite()) {
 					QCastleWhite((King) piece);
-					update();
-					enPassantPos = -1;
-					return;
 				}
 				else {
 					QCastleBlack((King) piece);
-					update();
-					enPassantPos = -1;
-					return;
 				}
+				update();
+				enPassantPos = -1;
+				return;
 			}
 			else
 				piece = new King(piece.isWhite(), piece.getPos(), false, false);
@@ -245,7 +224,13 @@ public class Board
 		update();
 		if(!enPassantMove)
 			enPassantPos = -1;
-}
+		lastMove = new Move(move, piece.getPos()-move, piece);
+	}
+	public void unmakeMove(Move move) {
+		whiteMove = !whiteMove;
+		board[move.getFINAL_POS()] = null;
+		board[move.getINITIAL_POS()] = move.getPiece();
+	}
 	public boolean promote(Piece piece, int move) {
 		int finalPos = piece.getPos()+move;
 		ArrayList<String> choices = new ArrayList<>();
@@ -263,23 +248,15 @@ public class Board
 		if (result.isPresent())
 			choice = result.get();
 		else
-			return false;
+			return true;
 		board[piece.getPos()] = null;
 		switch (choice) {
-			case "QUEEN":
-				board[finalPos] = new Queen(piece.isWhite(), piece.getPos());
-				break;
-			case "BISHOP":
-				board[finalPos] = new Bishop(piece.isWhite(), piece.getPos());
-				break;
-			case "ROOK":
-				board[finalPos] = new Rook(piece.isWhite(), piece.getPos());
-				break;
-			case "KNIGHT":
-				board[finalPos] = new Knight(piece.isWhite(), piece.getPos());
-				break;
+			case "QUEEN" -> board[finalPos] = new Queen(piece.isWhite(), piece.getPos());
+			case "BISHOP" -> board[finalPos] = new Bishop(piece.isWhite(), piece.getPos());
+			case "ROOK" -> board[finalPos] = new Rook(piece.isWhite(), piece.getPos());
+			case "KNIGHT" -> board[finalPos] = new Knight(piece.isWhite(), piece.getPos());
 		}
-		return true;
+		return false;
 	}
 	public void KCastleWhite(King king) {
 		Rook rook = (Rook)board[63];
@@ -334,4 +311,9 @@ public class Board
 	public ArrayList<Move> getPossibleMovesBlack() {
 		return possibleMovesBlack;
 	}
+
+	public Move getLastMove() {
+		return lastMove;
+	}
+
 }

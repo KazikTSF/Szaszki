@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
+            prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.StartController">
+   <Button layoutX="306.0" layoutY="419.0" mnemonicParsing="false" onAction="#start" text="Start Game">
+      <font>
+         <Font size="30.0"/>
+      </font>
+   </Button>
+   <TextField fx:id="FENText" layoutX="219.0" layoutY="50.0" prefHeight="50.0" prefWidth="551.0"
+              text="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -" AnchorPane.leftAnchor="219.0"
+              AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="50.0">
+      <font>
+         <Font size="20.0"/>
+      </font>
+   </TextField>
+   <Text layoutX="10.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Starting FEN: "
+         textAlignment="CENTER" wrappingWidth="179.0771484375" AnchorPane.leftAnchor="30.0"
+         AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="50.0">
+      <font>
+         <Font size="30.0"/>
+      </font>
+   </Text>
+   <Text layoutX="41.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Piece Style: "
+         textAlignment="CENTER" wrappingWidth="179.0771484375" AnchorPane.leftAnchor="30.0"
+         AnchorPane.rightAnchor="600.0" AnchorPane.topAnchor="150.0">
+      <font>
+         <Font size="30.0"/>
+      </font>
+   </Text>
+   <CheckBox fx:id="isWhiteBox" layoutX="53.0" layoutY="241.0" mnemonicParsing="false" selected="true" text="White"
+             AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="250.0">
+      <font>
+         <Font size="30.0"/>
+      </font>
+   </CheckBox>
+   <CheckBox fx:id="twoPlayerBox" layoutX="50.0" layoutY="326.0" mnemonicParsing="false" prefHeight="46.0"
+             prefWidth="252.0" text="Two player" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="350.0">
+      <font>
+         <Font size="30.0"/>
+      </font>
+   </CheckBox>
+   <MenuButton fx:id="styleMenu" layoutX="219.0" layoutY="150.0" mnemonicParsing="false" prefHeight="50.0"
+               prefWidth="550.0" text="Choose Style" AnchorPane.leftAnchor="219.0" AnchorPane.rightAnchor="31.0"
+               AnchorPane.topAnchor="150.0">
+      <items>
+         <MenuItem mnemonicParsing="false" text="Standard">
+            <graphic>
+               <Label maxHeight="50.0" maxWidth="500.0" minHeight="50.0" minWidth="550.0" prefHeight="50.0"
+                      prefWidth="500.0" text="Standard" textAlignment="CENTER">
+                  <font>
+                     <Font size="20.0"/>
+                  </font>
+               </Label>
+            </graphic>
+         </MenuItem>
+      </items>
+      <font>
+         <Font size="20.0"/>
+      </font>
+   </MenuButton>
+</AnchorPane>

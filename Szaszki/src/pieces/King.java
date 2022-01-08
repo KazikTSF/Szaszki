@@ -5,6 +5,7 @@ import game.Move;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("SuspiciousListRemoveInLoop")
 public class King extends Piece implements SlideMove {
 
 	private boolean canQCastle;
@@ -69,23 +70,24 @@ public class King extends Piece implements SlideMove {
 		int size = attackedSquares.size();
 		for(int i = 0; i < size; i++) {
 			if(attackedSquares.get(i).getPiece().getType() == PieceType.PAWN) {
-				if (attackedSquares.get(i).getMove() == 7 || attackedSquares.get(i).getMove() == 9) {
+				if (attackedSquares.get(i).getMOVE() != 7 || attackedSquares.get(i).getMOVE() != 9) {
 					attackedSquares.remove(i);
 					size--;
 				}
 			}
-			if(pos+move == attackedSquares.get(i).getFinalPos())
-				return false;
+			if (i != size)
+				if(pos+move == attackedSquares.get(i).getFINAL_POS())
+					return false;
 		}
 		if(move == 2) {
 			if(!canKCastle)
 				return false;
-			for(int i = 0; i < attackedSquares.size(); i++) {
-				if(attackedSquares.get(i).getFinalPos() == 62)
+			for (Move attackedSquare : attackedSquares) {
+				if (attackedSquare.getFINAL_POS() == 62)
 					return false;
-				if(attackedSquares.get(i).getFinalPos() == 61)
+				if (attackedSquare.getFINAL_POS() == 61)
 					return false;
-				if(attackedSquares.get(i).getFinalPos() == 60)
+				if (attackedSquare.getFINAL_POS() == 60)
 					return false;
 			}
 			if(board.getBoard()[62] != null)
@@ -100,12 +102,12 @@ public class King extends Piece implements SlideMove {
 		else if(move == -2) {
 			if(!canQCastle)
 				return false;
-			for(int i = 0; i < attackedSquares.size(); i++) {
-				if (attackedSquares.get(i).getFinalPos() == 58)
+			for (Move attackedSquare : attackedSquares) {
+				if (attackedSquare.getFINAL_POS() == 58)
 					return false;
-				if (attackedSquares.get(i).getFinalPos() == 59)
+				if (attackedSquare.getFINAL_POS() == 59)
 					return false;
-				if (attackedSquares.get(i).getFinalPos() == 60)
+				if (attackedSquare.getFINAL_POS() == 60)
 					return false;
 			}
 			if(board.getBoard()[59] != null)
@@ -119,35 +121,33 @@ public class King extends Piece implements SlideMove {
 			if(board.getBoard()[56].getType() != PieceType.ROOK || !board.getBoard()[56].isWhite())
 				return false;
 		}
-		if(board.getBoard()[pos+move] == null || !board.getBoard()[pos+move].isWhite())
-			return true;
-		return false;
+		return board.getBoard()[pos + move] == null || !board.getBoard()[pos + move].isWhite();
 	}
 
 	@Override
 	public boolean isMovePossibleBlack(Board board, int move) {
 		ArrayList<Move> attackedSquares;
 		attackedSquares = board.getPossibleMovesWhite();
-		int size = attackedSquares.size();
-		for(int i = 0; i < size; i++) {
-			if(attackedSquares.get(i).getPiece().getType() == PieceType.PAWN) {
-				if (attackedSquares.get(i).getMove() == -7 || attackedSquares.get(i).getMove() == -9) {
-					attackedSquares.remove(i);
-					size--;
+			int size = attackedSquares.size();
+			for (int i = 0; i < size; i++) {
+				if (attackedSquares.get(i).getPiece().getType() == PieceType.PAWN) {
+					if (attackedSquares.get(i).getMOVE() != -7 || attackedSquares.get(i).getMOVE() != -9) {
+						attackedSquares.remove(i);
+						size--;
+					}
 				}
+				if (pos + move == attackedSquares.get(i).getFINAL_POS())
+					return false;
 			}
-			if(pos+move == attackedSquares.get(i).getFinalPos())
-				return false;
-		}
 		if(move == 2) {
 			if(!canKCastle())
 				return false;
-			for(int i = 0; i < attackedSquares.size(); i++) {
-				if(attackedSquares.get(i).getFinalPos() == 6)
+			for (Move attackedSquare : attackedSquares) {
+				if (attackedSquare.getFINAL_POS() == 6)
 					return false;
-				if(attackedSquares.get(i).getFinalPos() == 5)
+				if (attackedSquare.getFINAL_POS() == 5)
 					return false;
-				if(attackedSquares.get(i).getFinalPos() == 4)
+				if (attackedSquare.getFINAL_POS() == 4)
 					return false;
 			}
 			if(board.getBoard()[7] == null)
@@ -162,12 +162,12 @@ public class King extends Piece implements SlideMove {
 		else if(move == -2) {
 			if(!canQCastle)
 				return false;
-			for(int i = 0; i < attackedSquares.size(); i++) {
-				if (attackedSquares.get(i).getFinalPos() == 2)
+			for (Move attackedSquare : attackedSquares) {
+				if (attackedSquare.getFINAL_POS() == 2)
 					return false;
-				if (attackedSquares.get(i).getFinalPos() == 3)
+				if (attackedSquare.getFINAL_POS() == 3)
 					return false;
-				if (attackedSquares.get(i).getFinalPos() == 4)
+				if (attackedSquare.getFINAL_POS() == 4)
 					return false;
 			}
 			if(board.getBoard()[0] == null)
@@ -181,9 +181,7 @@ public class King extends Piece implements SlideMove {
 			if(board.getBoard()[0].getType() != PieceType.ROOK || board.getBoard()[0].isWhite())
 				return false;
 		}
-		if(board.getBoard()[pos+move] == null || board.getBoard()[pos+move].isWhite())
-			return true;
-		return false;
+		return board.getBoard()[pos + move] == null || board.getBoard()[pos + move].isWhite();
 	}
 
 	public boolean canQCastle() {
