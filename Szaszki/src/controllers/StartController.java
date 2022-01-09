@@ -25,6 +25,7 @@ public class StartController {
     private CheckBox twoPlayerBox;
 
     public void start(ActionEvent e) throws IOException {
+        /*
         Game game = new Game(FENText.getText());
         if(!isWhiteBox.isSelected())
             throw new UnsupportedOperationException("PLAYING BLACK IS NOT SUPPORTED YET");
@@ -38,5 +39,6 @@ public class StartController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+         */
     }
 }
