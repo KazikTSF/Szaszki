@@ -9,71 +9,62 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="boardBackground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="900.0" prefWidth="1300.0" styleClass="boardBackground"
-            stylesheets="@../board.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-    <ImageView fitHeight="900.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0"
-               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="0.0">
-        <Image url="@../images/board.png"/>
+<AnchorPane fx:id="boardBackground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1300.0" styleClass="boardBackground" stylesheets="@../board.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+    <ImageView fitHeight="900.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="0.0">
+        <Image url="@../images/board.png" />
     </ImageView>
-    <GridPane fx:id="squares" alignment="CENTER" layoutX="50.0" layoutY="50.0" maxHeight="1.7976931348623157E308"
-              maxWidth="1.7976931348623157E308" onMousePressed="#onMousePressed" prefHeight="799.0" prefWidth="799.0"
-              AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+    <GridPane fx:id="squares" alignment="CENTER" layoutX="50.0" layoutY="50.0" maxHeight="799.0" maxWidth="799.0" onMousePressed="#onMousePressed" prefHeight="799.0" prefWidth="799.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
       <columnConstraints>
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
       </columnConstraints>
       <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES"/>
-          <RowConstraints minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES"/>
-          <RowConstraints minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES"/>
-          <RowConstraints minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES"/>
-          <RowConstraints minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES"/>
-          <RowConstraints minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES"/>
-          <RowConstraints minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES"/>
-          <RowConstraints minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES"/>
+          <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
-    <Text fx:id="lastMoveText" fill="WHITE" layoutX="900.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0"
-          textAlignment="CENTER" wrappingWidth="200.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="50.0">
+    <Text fx:id="lastMoveText" fill="WHITE" layoutX="900.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="200.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="50.0">
         <font>
-          <Font size="30.0"/>
+          <Font size="30.0" />
         </font>
     </Text>
-    <Text fx:id="evalText" fill="WHITE" layoutX="1000.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0"
-          text="Eval: " textAlignment="CENTER" wrappingWidth="200.0" AnchorPane.rightAnchor="100.0"
-          AnchorPane.topAnchor="130.0">
+    <Text fx:id="evalText" fill="WHITE" layoutX="1000.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Eval: " textAlignment="CENTER" wrappingWidth="200.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="130.0">
         <font>
-          <Font size="30.0"/>
+          <Font size="30.0" />
         </font>
     </Text>
-    <GridPane fx:id="grid" onMousePressed="#onMousePressed" opacity="0.4" prefHeight="799.0" prefWidth="799.0"
-              AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+    <GridPane fx:id="grid" onMousePressed="#onMousePressed" opacity="0.4" prefHeight="799.0" prefWidth="799.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
       <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-          <ColumnConstraints hgrow="SOMETIMES" prefWidth="100.0"/>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="100.0"/>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="100.0" />
       </columnConstraints>
       <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES"/>
-          <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES"/>
-          <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES"/>
-          <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES"/>
-          <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES"/>
-          <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES"/>
-          <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES"/>
-          <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES"/>
+          <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
 </AnchorPane>

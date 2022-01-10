@@ -25,12 +25,11 @@ public class StartController {
     private CheckBox twoPlayerBox;
 
     public void start(ActionEvent e) throws IOException {
-        /*
         Game game = new Game(FENText.getText());
         if(!isWhiteBox.isSelected())
-            throw new UnsupportedOperationException("PLAYING BLACK IS NOT SUPPORTED YET");
-        if(twoPlayerBox.isSelected())
-            throw new UnsupportedOperationException("PLAYING ALONE IS NOT SUPPORTED YET");
+            System.out.println("PLAYING BLACK IS NOT SUPPORTED YET");
+        if(!twoPlayerBox.isSelected())
+            System.out.println("PLAYING ALONE IS NOT SUPPORTED YET");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/scenes/board.fxml"));
         BoardController con = new BoardController(game);
         loader.setController(con);
@@ -39,6 +38,5 @@ public class StartController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-         */
     }
 }
