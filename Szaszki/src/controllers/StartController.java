@@ -24,19 +24,24 @@ public class StartController {
     @FXML
     private CheckBox twoPlayerBox;
 
-    public void start(ActionEvent e) throws IOException {
-        Game game = new Game(FENText.getText());
-        if(!isWhiteBox.isSelected())
-            System.out.println("PLAYING BLACK IS NOT SUPPORTED YET");
-        if(!twoPlayerBox.isSelected())
-            System.out.println("PLAYING ALONE IS NOT SUPPORTED YET");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/scenes/board.fxml"));
-        BoardController con = new BoardController(game);
-        loader.setController(con);
-        Parent root = loader.load();
-        Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void start(ActionEvent e) {
+        try {
+            Game game = new Game(FENText.getText());
+            if (!isWhiteBox.isSelected())
+                System.out.println("PLAYING BLACK IS NOT SUPPORTED YET");
+            if (!twoPlayerBox.isSelected())
+                System.out.println("PLAYING ALONE IS NOT SUPPORTED YET");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/scenes/board.fxml"));
+            BoardController con = new BoardController(game);
+            loader.setController(con);
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch(IOException ex) {
+            throw new RuntimeException();
+        }
     }
 }

@@ -24,6 +24,7 @@ public class Game
 		board.put("bK", 0L);
 		convertFEN(fen);
 	}
+
 	private void convertFEN(String fen) {
 		String[] sFEN = fen.split("\\s+");
 		char c = sFEN[4].toCharArray()[0];

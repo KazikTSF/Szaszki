@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import pieces.MoveGenerator;
 import pieces.Piece;
 import pieces.PieceType;
 
@@ -91,6 +92,21 @@ public class BoardController {
 	}
 	public BoardController(Game game) {
 		board = game.getBoard();
+		long w = 0;
+		long b = 0;
+		w = w | board.get("wP");
+		w = w | board.get("wR");
+		w = w | board.get("wN");
+		w = w | board.get("wB");
+		w = w | board.get("wQ");
+		w = w | board.get("wK");
+		b = b | board.get("bP");
+		b = b | board.get("bR");
+		b = b | board.get("bN");
+		b = b | board.get("bB");
+		b = b | board.get("bQ");
+		b = b | board.get("bK");
+		MoveGenerator.pawnsMoves(board.get("wP"), w, b, true);
 	}
 	public void onMousePressed(MouseEvent e) {
 
