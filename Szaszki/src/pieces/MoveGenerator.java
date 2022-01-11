@@ -12,6 +12,8 @@ public class MoveGenerator {
         long temp;
         if(isWhite) {
             temp = pawnsPos >>> 8;
+            long t = temp ^ board;
+            t = t & temp;
         }
         return res;
     }
