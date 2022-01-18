@@ -2,6 +2,7 @@ package controllers;
 
 import game.BitBoards;
 import game.Game;
+import game.Move;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -106,7 +107,8 @@ public class BoardController {
 		b = b | board.get("bB");
 		b = b | board.get("bQ");
 		b = b | board.get("bK");
-		MoveGenerator.pawnsMoves(board.get("wP"), w, b, true);
+		MoveGenerator moveGenerator = new MoveGenerator();
+		moveGenerator.pawnsMoves(board.get("wP"), w, b, true);
 	}
 	public void onMousePressed(MouseEvent e) {
 
